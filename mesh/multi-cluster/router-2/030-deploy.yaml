@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: router-2
+  name: router-2
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: router-2
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: router-2
+    spec:
+      containers:
+      - env:
+        - name: QDROUTERD_CONF
+          value: /opt/router/qdrouterd.conf
+        image: quay.io/interconnectedcloud/qdrouterd:latest
+        imagePullPolicy: Always
+        name: router-2
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/router
+          name: router-config
+          readOnly: true
+        - mountPath: /opt/router/tls
+          name: router-tls
+          readOnly: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: router-2
+        name: router-config
+      - secret:
+          defaultMode: 420
+          secretName: router-2
+        name: router-tls

@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: router
+  name: router
+data:
+  qdrouterd.conf: |2+
+
+    router {
+        mode: interior
+        id: router
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: 5672
+        role: normal
+    }
+
+    address {
+        prefix: trx
+        waypoint: true
+    }
+
+    linkRoute {
+        prefix: $coordinator
+        direction: in
+        connection: broker
+    }
+
+    linkRoute {
+        prefix: $coordinator
+        direction: out
+        connection: broker
+    }
+
+    linkRoute {
+        prefix: trx
+        direction: in
+        connection: broker
+    }
+
+    linkRoute {
+        prefix: trx
+        direction: out
+        connection: broker
+    }
+
+    connector {
+        name: broker
+        host: broker.site-1.svc.cluster.local
+        port: 5672
+        role: route-container
+        verifyHostname: false
+    }
+
+    address {
+        prefix: closest
+        distribution: closest
+    }
+    
+    address {
+        prefix: multicast
+        distribution: multicast
+    }
+    
+    address {
+        prefix: unicast
+        distribution: closest
+    }
+    
+    address {
+        prefix: exclusive
+        distribution: closest
+    }
+    
+    address {
+        prefix: broadcast
+        distribution: multicast
+    }

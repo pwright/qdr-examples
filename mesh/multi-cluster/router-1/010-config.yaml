@@ -1,0 +1,69 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: router-1
+  name: router-1
+data:
+  qdrouterd.conf: |2+
+
+    router {
+        mode: interior
+        id: router-1
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: 5672
+        role: normal
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: 55672
+        role: inter-router
+        saslMechanisms: EXTERNAL
+        sslProfile: router-tls
+        authenticatePeer: yes
+    }
+
+    connector {
+        host: router-2.site-2.svc.cluster.local
+        port: 55672
+        role: inter-router
+        sslProfile: router-tls
+        verifyHostname: no
+    }
+
+    sslProfile {
+        name: router-tls
+        caCertFile: /opt/router/tls/ca.pem
+        certFile: /opt/router/tls/cert.pem
+        privateKeyFile: /opt/router/tls/cert.key
+    }
+
+    address {
+        prefix: closest
+        distribution: closest
+    }
+    
+    address {
+        prefix: multicast
+        distribution: multicast
+    }
+    
+    address {
+        prefix: unicast
+        distribution: closest
+    }
+    
+    address {
+        prefix: exclusive
+        distribution: closest
+    }
+    
+    address {
+        prefix: broadcast
+        distribution: multicast
+    }
+
