@@ -1,0 +1,3 @@
+include::{mod-loc}attributes.adoc[]
+= Router examples
+

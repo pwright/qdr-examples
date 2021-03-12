@@ -1,0 +1,4 @@
+include::partial$attributes.adoc[]
+
+* xref:index.adoc[]
+* xref:standalone:index.adoc[]

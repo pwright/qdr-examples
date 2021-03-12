@@ -1,0 +1,5 @@
+build/
+!antora-ui/build
+node_modules/
+_templates/*/*
+
