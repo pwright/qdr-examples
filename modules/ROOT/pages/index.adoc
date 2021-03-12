@@ -1,3 +1,5 @@
 include::{mod-loc}attributes.adoc[]
 = Router examples
 
+* xref:standalone:index.adoc[]
+* xref:policy:index.adoc[]

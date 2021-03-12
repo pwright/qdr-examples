@@ -2,16 +2,40 @@ include::{mod-loc}attributes.adoc[]
 [#single-standalone-router]
 
 = Single standalone router
-:source-filename: /home/paulwright/repos/a/qdr-examples/standalone/README.md
 
-Creates a single router instance using a basic configuration file.
+This section describes how to create a single router instance using a basic configuration file.
 
 [#deploying-sample-scenario]
 == Deploying sample scenario
 
 ----
-$ oc -n docs-example apply -f ./
+$ oc -n docs-example apply -f ./modules/standalone/examples/
 ----
+
+The following YAML creates an OpenShift project:
+
+----
+include::{ex-loc}000-namespace.yaml[]
+----
+
+The following YAML creates a config map with the router configuration:
+
+----
+include::{ex-loc}010-config.yaml[]
+----
+
+The following YAML creates the router deployment:
+
+----
+include::{ex-loc}020-deploy.yaml[]
+----
+
+The following YAML creates a router service:
+
+----
+include::{ex-loc}030-service.yaml[]
+----
+
 
 [#removing-sample-scenario]
 == Removing sample scenario
