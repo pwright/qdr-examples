@@ -1,7 +1,7 @@
 site:
   title: Router examples
   # the 404 page and sitemap files only get generated when the url property is set
-  url: https://skupper.io/docs
+  url: https://pwright.github.io/qdr-examples/
   start_page: router-examples::index.adoc
 content:
   sources:
@@ -12,6 +12,9 @@ ui:
   bundle:
     url: ./ui-preview-bundle.zip
     snapshot: true
+
+output:
+  dir: ./docs
 
 asciidoc:
   attributes:
