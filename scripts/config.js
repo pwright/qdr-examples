@@ -1,6 +1,6 @@
 //config.js
 module.exports = {
-    files: '**',
-    from:  [/docs-example/g, /latest/g],
+   
+    from:  [/site-1/g, /latest/g],
     to:  ['docs-example', 'latest'],
   };

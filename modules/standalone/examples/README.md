@@ -5,11 +5,11 @@ Creates a single router instance using a basic configuration file.
 ## Deploying sample scenario
 
 ```
-oc -n site-1 apply -f ./
+oc -n docs-example apply -f ./
 ```
 
 ## Removing sample scenario
 
 ```
-oc delete ns site-1
+oc delete ns docs-example
 ```

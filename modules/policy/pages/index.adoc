@@ -1,0 +1,29 @@
+include::{mod-loc}attributes.adoc[]
+[#single-standalone-router-using-vhost-policies]
+= Single standalone router using vHost Policies
+:source-filename: /home/paulwright/repos/a/qdr-examples/policy/README.md
+
+This scenario contains a single router deployment that uses a config map that contains vHost policies.
+The policies are loaded at the moment pod is created, so changes to the policy config map needs a redeploy.
+
+[#deploying-sample-scenario]
+== Deploying sample scenario
+
+----
+oc -n site-1 apply -f ./
+----
+
+[#verifying-available-vhost-policies]
+== Verifying available vhost policies
+
+----
+oc -n site-1 exec deploy/router -- qdmanage query --type vhost
+----
+
+[#removing-sample-scenario]
+== Removing sample scenario
+
+----
+oc delete ns site-1
+----
+

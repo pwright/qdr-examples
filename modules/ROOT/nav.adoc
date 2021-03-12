@@ -2,3 +2,4 @@ include::partial$attributes.adoc[]
 
 * xref:index.adoc[]
 * xref:standalone:index.adoc[]
+* xref:policy:index.adoc[]
