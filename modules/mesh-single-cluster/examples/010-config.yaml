@@ -1,0 +1,174 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: router-1
+  name: router-1
+data:
+  qdrouterd.conf: |2+
+
+    router {
+        mode: interior
+        id: router-1
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: 5672
+        role: normal
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: 55672
+        role: inter-router
+    }
+
+    connector {
+        host: router-2
+        port: 55672
+        role: inter-router
+    }
+
+    address {
+        prefix: closest
+        distribution: closest
+    }
+    
+    address {
+        prefix: multicast
+        distribution: multicast
+    }
+    
+    address {
+        prefix: unicast
+        distribution: closest
+    }
+    
+    address {
+        prefix: exclusive
+        distribution: closest
+    }
+    
+    address {
+        prefix: broadcast
+        distribution: multicast
+    }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: router-2
+  name: router-2
+data:
+  qdrouterd.conf: |2+
+
+    router {
+        mode: interior
+        id: router-2
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: 5672
+        role: normal
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: 55672
+        role: inter-router
+    }
+
+    connector {
+        host: router-3
+        port: 55672
+        role: inter-router
+    }
+
+    address {
+        prefix: closest
+        distribution: closest
+    }
+    
+    address {
+        prefix: multicast
+        distribution: multicast
+    }
+    
+    address {
+        prefix: unicast
+        distribution: closest
+    }
+    
+    address {
+        prefix: exclusive
+        distribution: closest
+    }
+    
+    address {
+        prefix: broadcast
+        distribution: multicast
+    }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: router-3
+  name: router-3
+data:
+  qdrouterd.conf: |2+
+
+    router {
+        mode: interior
+        id: router-3
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: 5672
+        role: normal
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: 55672
+        role: inter-router
+    }
+
+    connector {
+        host: router-1
+        port: 55672
+        role: inter-router
+    }
+
+    address {
+        prefix: closest
+        distribution: closest
+    }
+    
+    address {
+        prefix: multicast
+        distribution: multicast
+    }
+    
+    address {
+        prefix: unicast
+        distribution: closest
+    }
+    
+    address {
+        prefix: exclusive
+        distribution: closest
+    }
+    
+    address {
+        prefix: broadcast
+        distribution: multicast
+    }
+

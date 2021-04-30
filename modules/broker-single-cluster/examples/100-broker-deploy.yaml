@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: broker
+  name: broker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broker
+  template:
+    metadata:
+      labels:
+        app: broker
+    spec:
+      containers:
+      - env:
+        - name: AMQ_USER
+          value: admin
+        - name: AMQ_PASSWORD
+          value: admin
+        - name: AMQ_EXTRA_ARSG
+          value: --host 0.0.0.0 --http-host 0.0.0.0 --allow-anonymous --queues trx.testQueue
+        image: quay.io/artemiscloud/activemq-artemis-broker:latest
+        imagePullPolicy: Always
+        name: broker
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60

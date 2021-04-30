@@ -1,5 +1,7 @@
 include::partial$attributes.adoc[]
 
-* xref:index.adoc[]
 * xref:standalone:index.adoc[]
 * xref:policy:index.adoc[]
+* xref:mesh-single-cluster:index.adoc[]
+* xref:mesh-multi-cluster:index.adoc[]
+* xref:broker-single-cluster:index.adoc[]

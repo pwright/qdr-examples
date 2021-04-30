@@ -1,6 +1,8 @@
 include::{mod-loc}attributes.adoc[]
-[#single-standalone-router]
 
+
+
+[#single-standalone-router]
 = Single standalone router
 
 This section describes how to create a single router instance using a basic configuration file.

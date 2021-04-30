@@ -1,0 +1,7 @@
+include::{mod-loc}attributes.adoc[]
+
+
+= Using a router with a broker example
+
+
+

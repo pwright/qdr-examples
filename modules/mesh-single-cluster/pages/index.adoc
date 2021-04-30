@@ -1,0 +1,2 @@
+include::{mod-loc}attributes.adoc[]
+= A router mesh in a single namespace
