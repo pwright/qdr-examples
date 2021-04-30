@@ -1,8 +1,8 @@
 include::{mod-loc}attributes.adoc[]
 = Router examples
 
-* xref:standalone:index.adoc[]
-* xref:policy:index.adoc[]
-* xref:mesh-single-cluster:index.adoc[]
-* xref:mesh-multi-cluster:index.adoc[]
-* xref:broker-single-cluster:index.adoc[]
+* xref:standalone.adoc[]
+* xref:policy.adoc[]
+* xref:mesh-single-cluster.adoc[]
+* xref:mesh-multi-cluster.adoc[]
+* xref:broker-single-cluster.adoc[]
