@@ -44,20 +44,20 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#standalone:index.adoc">standalone:index.adoc</a>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="standalone.html">Single standalone router</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#policy:index.adoc">policy:index.adoc</a>
+    <a class="nav-link" href="policy.html">Single standalone router using vHost Policies</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#mesh-single-cluster:index.adoc">mesh-single-cluster:index.adoc</a>
+    <a class="nav-link" href="mesh-single-cluster.html">A router mesh in a single namespace</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#mesh-multi-cluster:index.adoc">mesh-multi-cluster:index.adoc</a>
+    <a class="nav-link" href="mesh-multi-cluster.html">Mesh in separate namespaces example</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#broker-single-cluster:index.adoc">broker-single-cluster:index.adoc</a>
+    <a class="nav-link" href="broker-single-cluster.html">Using a router with a broker example</a>
   </li>
 </ul>
   </li>
@@ -117,7 +117,10 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Unresolved include directive in modules/ROOT/pages/standalone.adoc - include::example$000-namespace.yaml[]</pre>
+<pre>apiVersion: v1
+kind: Namespace
+metadata:
+  name: docs-example</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -125,7 +128,50 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Unresolved include directive in modules/ROOT/pages/standalone.adoc - include::example$010-config.yaml[]</pre>
+<pre>apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: router
+  name: router
+data:
+  qdrouterd.conf: |2+
+
+    router {
+        mode: standalone
+        id: router
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: 5672
+        role: normal
+    }
+
+    address {
+        prefix: closest
+        distribution: closest
+    }
+
+    address {
+        prefix: multicast
+        distribution: multicast
+    }
+
+    address {
+        prefix: unicast
+        distribution: closest
+    }
+
+    address {
+        prefix: exclusive
+        distribution: closest
+    }
+
+    address {
+        prefix: broadcast
+        distribution: multicast
+    }</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -133,7 +179,49 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Unresolved include directive in modules/ROOT/pages/standalone.adoc - include::example$020-deploy.yaml[]</pre>
+<pre>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: router
+  name: router
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: router
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: router
+    spec:
+      containers:
+      - env:
+        - name: QDROUTERD_CONF
+          value: /opt/router/qdrouterd.conf
+        image: quay.io/interconnectedcloud/qdrouterd:latest
+        imagePullPolicy: Always
+        name: router
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/router
+          name: router-config
+          readOnly: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: router
+        name: router-config</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -141,7 +229,21 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Unresolved include directive in modules/ROOT/pages/standalone.adoc - include::example$030-service.yaml[]</pre>
+<pre>apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: router
+  name: router
+spec:
+  ports:
+  - name: "5672"
+    port: 5672
+    protocol: TCP
+    targetPort: 5672
+  selector:
+    app: router
+  type: ClusterIP</pre>
 </div>
 </div>
 </div>

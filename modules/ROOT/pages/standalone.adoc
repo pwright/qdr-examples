@@ -17,25 +17,25 @@ $ oc -n docs-example apply -f ./modules/standalone/examples/
 The following YAML creates an OpenShift project:
 
 ----
-include::{ex-loc}000-namespace.yaml[]
+include::{ex-loc}/standalone/000-namespace.yaml[]
 ----
 
 The following YAML creates a config map with the router configuration:
 
 ----
-include::{ex-loc}010-config.yaml[]
+include::{ex-loc}/standalone/010-config.yaml[]
 ----
 
 The following YAML creates the router deployment:
 
 ----
-include::{ex-loc}020-deploy.yaml[]
+include::{ex-loc}/standalone/020-deploy.yaml[]
 ----
 
 The following YAML creates a router service:
 
 ----
-include::{ex-loc}030-service.yaml[]
+include::{ex-loc}/standalone/030-service.yaml[]
 ----
 
 
